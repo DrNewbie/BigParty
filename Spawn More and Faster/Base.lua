@@ -7,8 +7,8 @@ if UpdateThisMod then
 		mod_id = 'Spawn More and Faster',
 		data = {
 			modworkshop_id = 20649,
-            dl_url = 'https://github.com/DrNewbie/BigParty/raw/master/Spawn%20More%20and%20Faster.zip',
-            info_url = 'https://raw.githubusercontent.com/DrNewbie/BigParty/master/Spawn%20More%20and%20Faster/mod.txt'
+            dl_url = 'https://drnewbie.github.io/BigParty/Spawn%20More%20and%20Faster.zip',
+            info_url = 'https://drnewbie.github.io/BigParty/Spawn%20More%20and%20Faster/mod.txt'
 		}
 	})
 end
