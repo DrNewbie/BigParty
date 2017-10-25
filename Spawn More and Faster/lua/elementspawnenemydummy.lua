@@ -10,6 +10,9 @@ function ElementSpawnEnemyDummy:produce(params)
 	if not managers.groupai or not managers.groupai:state() then
 		return unit
 	end
+	if unit:name():key() == Idstring('units/pd2_dlc_wwh/characters/ene_locke/ene_locke'):key()
+		return unit
+	end
 	local gro = managers.groupai:state()
 	if not gro:is_AI_enabled() or not gro:enemy_weapons_hot() or gro:whisper_mode() then
 		return unit
