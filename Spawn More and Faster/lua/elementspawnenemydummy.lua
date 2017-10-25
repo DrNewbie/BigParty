@@ -42,9 +42,6 @@ function ElementSpawnEnemyDummy:produce(params)
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
 	end
-	if xtimes <= 0 then
-		return unit
-	end
 	local _spawn_enemy = function (unit_name, pos, rot)
 		local unit_done = safe_spawn_unit(unit_name, pos, rot)
 		local team_id = tweak_data.levels:get_default_team_ID(unit_done:base():char_tweak().access == "gangster" and "gangster" or "combatant")
@@ -52,22 +49,27 @@ function ElementSpawnEnemyDummy:produce(params)
 		gro:assign_enemy_to_group_ai(unit_done, team_id)
 		return unit_done
 	end
-	for i = 1, xtimes do
-		local enemy_name = unit:name()
-		local pos, rot = self:get_orientation()
+	local _pos_offset = function ()
 		local ang = math.random() * 360 * math.pi
 		local rad = math.random(30, 50)
-		local offset = Vector3(math.cos(ang) * rad, math.sin(ang) * rad, 0)
-		pos = pos + offset
-		local unit_done = _spawn_enemy(enemy_name, pos, rot)
-		table.insert(self._units, unit_done)
+		return Vector3(math.cos(ang) * rad, math.sin(ang) * rad, 0)
+	end
+	local pos, rot = self:get_orientation()
+	if xtimes > 0 then
+		for i = 1, xtimes do
+			local enemy_name = unit:name()
+			local unit_done = _spawn_enemy(enemy_name, pos + _pos_offset(), rot)
+			table.insert(self._units, unit_done)
+		end
 	end
 	if #SFM_4_Sniper > 0 then
-		local _r = math.random(#SFM_4_Sniper)
-		if tostring(SFM_4_Sniper[_r]):find('Idstring') then
-			unit_done = _spawn_enemy(SFM_4_Sniper[_r], pos, rot)
-			table.insert(self._units, unit_done)
-			table.remove(SFM_4_Sniper, _r)
+		for i = 1, 3 do
+			local _r = math.random(#SFM_4_Sniper)
+			if tostring(SFM_4_Sniper[_r]):find('Idstring') then
+				unit_done = _spawn_enemy(SFM_4_Sniper[_r], pos + _pos_offset(), rot)
+				table.insert(self._units, unit_done)
+				table.remove(SFM_4_Sniper, _r)
+			end
 		end
 	end
 	return unit
