@@ -32,15 +32,16 @@ function ElementSpawnEnemyDummy:produce(params)
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
+		table.insert(SFM_4_Sniper, unit:name())
+		table.insert(SFM_4_Sniper, unit:name())
+		table.insert(SFM_4_Sniper, unit:name())
+		table.insert(SFM_4_Sniper, unit:name())
 	elseif catname == "taser" or catname == "tank" then
 		xtimes = 1
-		table.insert(SFM_4_Sniper, unit:name())
 	elseif not gro:is_enemy_special(unit) then
 		xtimes = 0
 	elseif gro:is_enemy_special(unit) then
 		xtimes = 1
-		table.insert(SFM_4_Sniper, unit:name())
-		table.insert(SFM_4_Sniper, unit:name())
 	end
 	local _spawn_enemy = function (unit_name, pos, rot)
 		local unit_done = safe_spawn_unit(unit_name, pos, rot)
