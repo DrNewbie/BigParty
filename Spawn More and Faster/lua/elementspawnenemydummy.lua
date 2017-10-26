@@ -23,7 +23,7 @@ function ElementSpawnEnemyDummy:produce(params)
 	if gro:is_enemy_converted_to_criminal(unit) then
 		return unit
 	end
-	local xtimes = 0
+	local xtimes = 1
 	local catname = tostring(unit:base()._tweak_table)
 	if catname == "sniper" then
 		table.insert(SFM_4_Sniper, unit:name())
@@ -36,10 +36,7 @@ function ElementSpawnEnemyDummy:produce(params)
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
-	elseif not gro:is_enemy_special(unit) then
-		xtimes = 2
-	elseif gro:is_enemy_special(unit) then
-		xtimes = 1
+		xtimes = 0
 	end
 	local _spawn_enemy = function (unit_name, pos, rot)
 		local unit_done = safe_spawn_unit(unit_name, pos, rot)
