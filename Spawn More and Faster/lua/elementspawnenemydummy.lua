@@ -36,10 +36,8 @@ function ElementSpawnEnemyDummy:produce(params)
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
 		table.insert(SFM_4_Sniper, unit:name())
-	elseif catname == "taser" or catname == "tank" then
-		xtimes = 1
 	elseif not gro:is_enemy_special(unit) then
-		xtimes = 0
+		xtimes = 2
 	elseif gro:is_enemy_special(unit) then
 		xtimes = 1
 	end
