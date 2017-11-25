@@ -11,7 +11,7 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 			shield = 16,
 			medic = 16
 		}
-		local amount_multiplier = 6
+		local amount_multiplier = 4
 		for id, group in pairs(group_ai.enemy_spawn_groups) do
 			if id ~= "Phalanx" and not id:find("spooc") then
 				if group.amount then
