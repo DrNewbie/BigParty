@@ -24,7 +24,7 @@
 			"default_value":90,
 			"max":999,
 			"min":0,
-			"step":1,
+			"step":1
 		},
 		{
 			"type":"slider",
@@ -36,7 +36,7 @@
 			"default_value":70,
 			"max":999,
 			"min":0,
-			"step":1,
+			"step":1
 		}
 	]
 }
