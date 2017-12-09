@@ -1,0 +1,10 @@
+{
+	"MoreEnemies_menu_title":"Spawn More Enemies",
+	"MoreEnemies_menu_desc":" ",
+	"MoreEnemies_menu_force_cap_title":"Force Cap",
+	"MoreEnemies_menu_force_cap_desc":"A function to kill enemies when there are too many",
+	"MoreEnemies_force_cap_attach_title":"Cap All",
+	"MoreEnemies_force_cap_attach_desc":"How many enemies require to active 'Force Cap'",
+	"MoreEnemies_force_cap_normal_title":"Cap Normal",
+	"MoreEnemies_force_cap_normal_desc":"How many normal enemies is too many"
+}

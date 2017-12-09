@@ -16,12 +16,13 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 			if id ~= "Phalanx" and not id:find("spooc") then
 				if group.amount then
 					for k, v in pairs(group.amount) do
-						group.amount[k] = v * amount_multiplier
+						group.amount[k] = math.round(v * amount_multiplier) + 1
 					end
 				end
 				for _, spawn in pairs(group.spawn or {}) do
 					if spawn.amount_max then
 						spawn.amount_max = spawn.amount_max * (amount_multiplier * ((spawn.unit:find("swat") or spawn.unit:find("heavy")) and 1 or 0.2))
+						spawn.amount_max = math.round(spawn.amount_max) + 1
 						if id:find('tank') or id:find('taser') or id:find('shield') or id:find('medic') then
 							spawn.amount_max = math.clamp(spawn.amount_max, 1, 8)
 						end
@@ -29,6 +30,14 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 				end
 			end
 		end
+		table.insert(group_ai.unit_categories.medic_M4.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
+		table.insert(group_ai.unit_categories.medic_M4.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
+		table.insert(group_ai.unit_categories.medic_R870.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
+		table.insert(group_ai.unit_categories.medic_R870.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
+		table.insert(group_ai.unit_categories.medic_M4.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
+		table.insert(group_ai.unit_categories.medic_M4.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
+		table.insert(group_ai.unit_categories.medic_R870.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
+		table.insert(group_ai.unit_categories.medic_R870.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
 		local besiege = group_ai.besiege
 		besiege.assault.force = {
 			5,
