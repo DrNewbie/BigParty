@@ -9,7 +9,8 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 			taser = 8,
 			spooc = 8,
 			shield = 16,
-			medic = 16
+			medic = 16,
+			sniper = 16
 		}
 		local amount_multiplier = 4
 		for id, group in pairs(group_ai.enemy_spawn_groups) do
