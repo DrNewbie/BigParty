@@ -41,9 +41,9 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 		table.insert(group_ai.unit_categories.medic_R870.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
 		local besiege = group_ai.besiege
 		besiege.assault.force = {
-			5,
-			5,
-			5
+			9,
+			9,
+			9
 		}
 		besiege.assault.force_pool = {
 			300,
