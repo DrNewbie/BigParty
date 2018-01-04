@@ -3,7 +3,7 @@
 	"description": "Spawn More Enemies and Faster",
 	"author": "Dr_Newbie",
 	"contact": "http://modwork.shop/20649",
-	"version": "48",
+	"version": "47",
 	"priority": 1,
 	"color": "0 0 0",
 	"blt_version": 2,
@@ -12,9 +12,17 @@
 			"identifier" : "20649"
 		}
 	],
-	"dependencies": [
-		"FS",
-		"ANCR"
+	"libraries": [
+		{
+			"display_name": "Full Speed Swarm",
+			"identifier": "FS",
+			"optional": "false"
+		},
+		{
+			"display_name": "Announcer",
+			"identifier": "ANCR",
+			"optional": "false"
+		}
 	],
 	"hooks": [
 		{
