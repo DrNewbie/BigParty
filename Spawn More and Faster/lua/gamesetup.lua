@@ -5,7 +5,7 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 	if tweak_data.group_ai then
 		local group_ai = tweak_data.group_ai
 		group_ai.special_unit_spawn_limits = {
-			tank = 6,
+			tank = 8,
 			taser = 8,
 			spooc = 8,
 			shield = 16,
@@ -31,19 +31,13 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 				end
 			end
 		end
-		table.insert(group_ai.unit_categories.medic_M4.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
-		table.insert(group_ai.unit_categories.medic_M4.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
-		table.insert(group_ai.unit_categories.medic_R870.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
-		table.insert(group_ai.unit_categories.medic_R870.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
-		table.insert(group_ai.unit_categories.medic_M4.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
-		table.insert(group_ai.unit_categories.medic_M4.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
-		table.insert(group_ai.unit_categories.medic_R870.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
-		table.insert(group_ai.unit_categories.medic_R870.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
+		table.insert(group_ai.unit_categories.FBI_tank.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
+		table.insert(group_ai.unit_categories.FBI_tank.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
 		local besiege = group_ai.besiege
 		besiege.assault.force = {
-			9,
-			9,
-			9
+			5,
+			5,
+			5
 		}
 		besiege.assault.force_pool = {
 			300,
