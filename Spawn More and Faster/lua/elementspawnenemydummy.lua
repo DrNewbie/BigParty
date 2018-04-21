@@ -21,14 +21,6 @@ function ElementSpawnEnemyDummy:produce(params)
 	if gro:is_enemy_converted_to_criminal(unit) then
 		return unit
 	end
-	local xtimes = 1
-	local catname = tostring(unit:base()._tweak_table)
-	if catname == "sniper" then
-		xtimes = 0
-	end
-	if not gro:is_enemy_special(unit) then
-		xtimes = 2
-	end
 	local _spawn_enemy = function (unit_name, pos, rot)
 		local unit_done = safe_spawn_unit(unit_name, pos, rot)
 		local team_id = tweak_data.levels:get_default_team_ID(unit_done:base():char_tweak().access == "gangster" and "gangster" or "combatant")
@@ -41,10 +33,26 @@ function ElementSpawnEnemyDummy:produce(params)
 		local rad = math.random(20, 30)
 		return Vector3(math.cos(ang) * rad, math.sin(ang) * rad, 0)
 	end
+	local enemy_name = unit:name()
 	local pos, rot = self:get_orientation()
+	local xtimes = 1
+	local catname = tostring(unit:base()._tweak_table)
+	if catname == "sniper" then
+		local _objective_sniper = unit:brain() and unit:brain():objective() or {}
+		if type(_objective_sniper) == "table" then
+			for i = 1, 3 do
+				local unit_done_sniper = _spawn_enemy(enemy_name, pos + _pos_offset(), rot)
+				unit_done_sniper:brain():set_objective(_objective_sniper)
+				table.insert(self._units, unit_done_sniper)
+			end
+		end
+		return unit
+	end
+	if not gro:is_enemy_special(unit) then
+		xtimes = 2
+	end
 	if xtimes > 0 then
 		for i = 1, xtimes do
-			local enemy_name = unit:name()
 			local unit_done = _spawn_enemy(enemy_name, pos + _pos_offset(), rot)
 			table.insert(self._units, unit_done)
 		end
