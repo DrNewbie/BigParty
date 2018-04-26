@@ -15,6 +15,24 @@
 			"default_value":false
 		},
 		{
+			"type":"toggle",
+			"id":"id_MoreEnemies_more_sniper",
+			"title":"MoreEnemies_menu_more_sniper_title",
+			"description":"MoreEnemies_menu_more_sniper_desc",
+			"callback":"MoreEnemies_more_sniper",
+			"value":"more_sniper",
+			"default_value":true
+		},
+		{
+			"type":"toggle",
+			"id":"id_MoreEnemies_more_spawn",
+			"title":"MoreEnemies_menu_more_spawn_title",
+			"description":"MoreEnemies_menu_more_spawn_desc",
+			"callback":"MoreEnemies_more_spawn",
+			"value":"more_spawn",
+			"default_value":false
+		},
+		{
 			"type":"slider",
 			"id":"id_MoreEnemies_force_cap_attach",
 			"title":"MoreEnemies_force_cap_attach_title",

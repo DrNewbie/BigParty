@@ -5,6 +5,10 @@
 	"MoreEnemies_menu_force_cap_desc":"A function to kill enemies when there are too many",
 	"MoreEnemies_force_cap_attach_title":"Cap All",
 	"MoreEnemies_force_cap_attach_desc":"How many enemies require to active 'Force Cap'",
+	"MoreEnemies_menu_more_sniper_title":"More Sniper",
+	"MoreEnemies_menu_more_sniper_desc":"Spawn More Sniper",
+	"MoreEnemies_menu_more_spawn_title":"Spawn Even More",
+	"MoreEnemies_menu_more_spawn_desc":"System will clone the spawn group",
 	"MoreEnemies_force_cap_normal_title":"Cap Normal",
 	"MoreEnemies_force_cap_normal_desc":"How many normal enemies is too many"
 }

@@ -69,6 +69,12 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 	function MenuCallbackHandler:MoreEnemies_force_cap_normal(item)
 		MoreEnemies.Settings.force_cap_normal = math.round(item:value())
 	end
+	function MenuCallbackHandler:MoreEnemies_more_sniper(item)
+		MoreEnemies.Settings.more_sniper = tostring(item:value()) == 'on' and true or false
+	end
+	function MenuCallbackHandler:MoreEnemies_more_spawn(item)
+		MoreEnemies.Settings.more_spawn = tostring(item:value()) == 'on' and true or false
+	end
 	MoreEnemies:load()
 	MenuHelper:LoadFromJsonFile(MoreEnemies.ModPath.."Menu.json", MoreEnemies, MoreEnemies.Settings)
 end)
