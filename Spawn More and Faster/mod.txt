@@ -3,7 +3,7 @@
 	"description": "Spawn More Enemies and Faster",
 	"author": "Dr_Newbie",
 	"contact": "http://modwork.shop/20649",
-	"version": "55",
+	"version": "56",
 	"priority": 1,
 	"color": "0 0 0",
 	"blt_version": 2,

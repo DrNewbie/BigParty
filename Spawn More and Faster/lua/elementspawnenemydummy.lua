@@ -11,8 +11,11 @@ MoreEnemies.Settings = MoreEnemies.Settings or {}
 
 local SFM_ElementSpawnEnemyDummy_ori_produce = ElementSpawnEnemyDummy.produce
 
-function ElementSpawnEnemyDummy:produce(params)
-	local unit = SFM_ElementSpawnEnemyDummy_ori_produce(self, params)
+function ElementSpawnEnemyDummy:produce(...)
+	local unit = SFM_ElementSpawnEnemyDummy_ori_produce(self, ...)
+	if not unit or not alive(unit) then
+		return
+	end
 	if not managers.groupai or not managers.groupai:state() then
 		return unit
 	end
