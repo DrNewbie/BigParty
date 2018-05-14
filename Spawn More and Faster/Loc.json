@@ -18,7 +18,7 @@
 	"MoreEnemies_special_max_medic_title":"Maximum of Medic",
 	"MoreEnemies_special_max_sniper_title":"Maximum of Sniper",
 	"MoreEnemies_general_groups_multiplier_title":"Groups Multiplier",
-	"MoreEnemies_general_max_of_groups_desc":"Value to increase the amount in each group"
+	"MoreEnemies_general_max_of_groups_desc":"Value to increase the amount in each group",
 	"MoreEnemies_general_max_of_groups_title":"Groups Maximum",
 	"MoreEnemies_general_max_of_groups_desc":"Maximum of Cops in each group"
 }
