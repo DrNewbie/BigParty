@@ -1,9 +1,15 @@
+_G.MoreEnemies = _G.MoreEnemies or {}
+
 Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 	if MutatorBigParty and managers.mutators:is_mutator_active(MutatorBigParty) then
 		return
 	end
 	if tweak_data.group_ai then
+		local SME_S = MoreEnemies and MoreEnemies.Settings or nil
 		local group_ai = tweak_data.group_ai
+		local besiege = group_ai.besiege
+		local assault = group_ai.besiege.assault
+		
 		group_ai.special_unit_spawn_limits = {
 			tank = 8,
 			taser = 8,
@@ -12,79 +18,75 @@ Hooks:PostHook(GameSetup, "init_game", "SMF_GameSetup_init_game", function(self)
 			medic = 16,
 			sniper = 16
 		}
-		local amount_multiplier = 4
+		
+		local general_groups_multiplier = 4
+		local general_max_of_groups = 8
+		
+		if SME_S then
+			general_groups_multiplier = SME_S.general_groups_multiplier or general_groups_multiplier
+			general_max_of_groups = SME_S.general_max_of_groups or general_max_of_groups
+			group_ai.special_unit_spawn_limits.tank = SME_S.special_max_tank or group_ai.special_unit_spawn_limits.tank
+			group_ai.special_unit_spawn_limits.taser = SME_S.special_max_taser or group_ai.special_unit_spawn_limits.taser
+			group_ai.special_unit_spawn_limits.spooc = SME_S.special_max_spooc or group_ai.special_unit_spawn_limits.spooc
+			group_ai.special_unit_spawn_limits.shield = SME_S.special_max_shield or group_ai.special_unit_spawn_limits.shield
+			group_ai.special_unit_spawn_limits.medic = SME_S.special_max_medic or group_ai.special_unit_spawn_limits.medic
+			group_ai.special_unit_spawn_limits.sniper = SME_S.special_max_sniper or group_ai.special_unit_spawn_limits.sniper
+			GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS
+		end
+		
+		local half_spooc = 3
+		
 		for id, group in pairs(group_ai.enemy_spawn_groups) do
-			if id ~= "Phalanx" and not id:find("spooc") then
+			if id ~= "Phalanx" then
+				local is_spooc = id:find("spooc")
 				if group.amount then
 					for k, v in pairs(group.amount) do
-						group.amount[k] = math.round(v * amount_multiplier) + 1
+						group.amount[k] = math.round(v * general_groups_multiplier) + 1
+						group.amount[k] = math.clamp(group.amount[k], 1, general_max_of_groups)
+						if is_spooc then
+							group.amount[k] = math.clamp(group.amount[k], 1, half_spooc)
+						end
 					end
 				end
 				for _, spawn in pairs(group.spawn or {}) do
 					if spawn.amount_max then
-						spawn.amount_max = spawn.amount_max * (amount_multiplier * ((spawn.unit:find("swat") or spawn.unit:find("heavy")) and 1 or 0.2))
+						spawn.amount_max = spawn.amount_max * (general_groups_multiplier * ((spawn.unit:find("swat") or spawn.unit:find("heavy")) and 1 or 0.5))
 						spawn.amount_max = math.round(spawn.amount_max) + 1
-						if id:find('tank') or id:find('taser') or id:find('shield') or id:find('medic') then
-							spawn.amount_max = math.clamp(spawn.amount_max, 1, 8)
+						spawn.amount_max = math.clamp(spawn.amount_max, 1, general_max_of_groups)
+						if is_spooc then
+							spawn.amount_max = math.clamp(spawn.amount_max, 1, half_spooc)
 						end
 					end
 				end
 			end
 		end
-		--[[
-		table.insert(group_ai.unit_categories.FBI_tank.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
-		table.insert(group_ai.unit_categories.FBI_tank.unit_types.america, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
-		table.insert(group_ai.unit_categories.FBI_tank.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_medic/ene_bulldozer_medic"))
-		table.insert(group_ai.unit_categories.FBI_tank.unit_types.russia, Idstring("units/pd2_dlc_drm/characters/ene_bulldozer_minigun/ene_bulldozer_minigun"))
-		]]
-		local besiege = group_ai.besiege
-		besiege.assault.force = {
-			5,
-			5,
-			5
-		}
-		besiege.assault.force_pool = {
-			300,
-			600,
-			1000
-		}
-		besiege.reenforce.interval = {
-			1,
-			2,
-			3
-		}
-		besiege.assault.force_balance_mul = {
-			20,
-			24,
-			28,
-			32
-		}
-		besiege.assault.force_pool_balance_mul = {
-			12,
-			18,
-			24,
-			32
-		}
-		besiege.assault.delay = {
-			15,
-			10,
-			5
-		}
-		besiege.assault.sustain_duration_min = {
-			120,
-			160,
-			240
-		}
-		besiege.assault.sustain_duration_max = {
-			240,
-			320,
-			480
-		}
-		besiege.assault.sustain_duration_balance_mul = {
-			1.3,
-			1.5,
-			1.7,
-			1.9
-		}
+		
+		for i = 1, #assault.force do
+			assault.force[i] = 1200 * i
+		end
+		
+		for i = 1, #besiege.reenforce.interval do
+			besiege.reenforce.interval[i] = i
+		end
+		
+		for i = 1, #assault.force_pool_balance_mul do
+			assault.force_pool_balance_mul[i] = 24 * i
+		end
+		
+		for i = 1, #assault.delay do
+			assault.delay[i] = 15
+		end
+		
+		for i = 1, #assault.sustain_duration_min do
+			assault.sustain_duration_min[i] = assault.sustain_duration_min[i] * 3
+		end
+		
+		for i = 1, #assault.sustain_duration_max do
+			assault.sustain_duration_max[i] = assault.sustain_duration_max[i] * 3
+		end
+		
+		for i = 1, #assault.sustain_duration_balance_mul do
+			assault.sustain_duration_balance_mul[i] = assault.sustain_duration_balance_mul[i] * 3
+		end
 	end
 end)

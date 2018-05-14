@@ -24,7 +24,16 @@ Hooks:Add("LocalizationManagerPostInit", "MoreEnemies_loc", function(loc)
 end)
 
 MoreEnemies.Settings = {
+	general_groups_multiplier = 4,
+	general_max_of_groups = 8,
+	special_max_tank = 8,
+	special_max_taser = 8,
+	special_max_spooc = 8,
+	special_max_shield = 16,
+	special_max_medic = 16,
+	special_max_sniper = 16,
 	force_cap = false,
+	more_spawn = 3,
 	force_cap_attach = 120,
 	force_cap_normal = 90
 }
@@ -48,7 +57,16 @@ function MoreEnemies:load()
 		_file:close()
 	else
 		self.Settings = {
+			general_groups_multiplier = 4,
+			general_max_of_groups = 8,
+			special_max_tank = 8,
+			special_max_taser = 8,
+			special_max_spooc = 8,
+			special_max_shield = 16,
+			special_max_medic = 16,
+			special_max_sniper = 16,
 			force_cap = false,
+			more_spawn = 3,
 			force_cap_attach = 120,
 			force_cap_normal = 90
 		}
@@ -73,7 +91,31 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 		MoreEnemies.Settings.more_sniper = tostring(item:value()) == 'on' and true or false
 	end
 	function MenuCallbackHandler:MoreEnemies_more_spawn(item)
-		MoreEnemies.Settings.more_spawn = tostring(item:value()) == 'on' and true or false
+		MoreEnemies.Settings.more_spawn = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_general_groups_multiplier(item)
+		MoreEnemies.Settings.general_groups_multiplier = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_general_max_of_groups(item)
+		MoreEnemies.Settings.general_max_of_groups = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_special_max_tank(item)
+		MoreEnemies.Settings.special_max_tank = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_special_max_taser(item)
+		MoreEnemies.Settings.special_max_taser = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_special_max_spooc(item)
+		MoreEnemies.Settings.special_max_spooc = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_special_max_shield(item)
+		MoreEnemies.Settings.special_max_shield = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_special_max_medic(item)
+		MoreEnemies.Settings.special_max_medic = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_special_max_sniper(item)
+		MoreEnemies.Settings.special_max_sniper = math.round(item:value())
 	end
 	MoreEnemies:load()
 	MenuHelper:LoadFromJsonFile(MoreEnemies.ModPath.."Menu.json", MoreEnemies, MoreEnemies.Settings)

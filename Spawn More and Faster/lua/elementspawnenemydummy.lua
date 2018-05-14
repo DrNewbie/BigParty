@@ -83,9 +83,9 @@ function ElementSpawnEnemyDummy:produce(...)
 			end
 		end
 	end
-	if MoreEnemies.Settings.more_spawn then
+	if type(MoreEnemies.Settings.more_spawn) == "number" and MoreEnemies.Settings.more_spawn > 0 then
 		if not gro:is_enemy_special(unit) then
-			xtimes = 2
+			xtimes = MoreEnemies.Settings.more_spawn
 		end
 		if xtimes > 0 then
 			for i = 1, xtimes do

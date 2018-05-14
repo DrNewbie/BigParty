@@ -24,6 +24,12 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 		return
 	end
 	if MoreEnemies.Settings.force_cap then
+		local _can_kill = function(target_unit)
+			if not target_unit or not alive(target_unit) or not target_unit:character_damage() or target_unit:character_damage().immortal or target_unit:character_damage()._invulnerable or target_unit:character_damage():dead() or managers.groupai:state():is_enemy_converted_to_criminal(target_unit) or not target_unit:base()._tweak_table then
+				return false
+			end
+			return true
+		end
 		if self._sfm_delay then
 			self._sfm_delay = self._sfm_delay - dt
 			if self._sfm_delay <= 0 then
@@ -40,7 +46,7 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 					local cat_count = {}
 					local sp_limit = tweak_data.group_ai.special_unit_spawn_limits
 					for u_key, u_data in pairs(self._enemy_data.unit_data) do
-						if not u_data or not u_data.unit or not alive(u_data.unit) or not u_data.unit:character_damage() or not u_data.unit:character_damage():can_kill() or u_data.unit:character_damage()._immortal or u_data.unit:character_damage():dead() or managers.groupai:state():is_enemy_converted_to_criminal(u_data.unit) or not u_data.unit:base()._tweak_table then
+						if not u_data or not _can_kill(u_data.unit) or self:is_civilian(u_data.unit) then
 						
 						else
 							if type(u_data.unit:brain()._current_logic_name) ~= "string" or LogicNotAllow[u_data.unit:brain()._current_logic_name] then
@@ -84,7 +90,7 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 							if kill_times <= 0 then
 								break
 							end
-							if not u_data or not u_data.unit or not alive(u_data.unit) or not u_data.unit:character_damage() or not u_data.unit:character_damage():can_kill() or u_data.unit:character_damage()._immortal or u_data.unit:character_damage():dead() or managers.groupai:state():is_enemy_converted_to_criminal(u_data.unit) or not u_data.unit:base()._tweak_table then
+							if not u_data or not _can_kill(u_data.unit) or self:is_civilian(u_data.unit) then
 							
 							else
 								kill_times = kill_times - 1
@@ -92,7 +98,7 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 								break
 							end						
 						end
-						self._sfm_delay = t + 5
+						self._sfm_delay = self._sfm_delay + 5
 					end
 				else
 					LowSizeTimes = 0
