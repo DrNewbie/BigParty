@@ -15,15 +15,6 @@
 			"default_value":false
 		},
 		{
-			"type":"toggle",
-			"id":"id_MoreEnemies_more_sniper",
-			"title":"MoreEnemies_menu_more_sniper_title",
-			"description":"MoreEnemies_menu_more_sniper_desc",
-			"callback":"MoreEnemies_more_sniper",
-			"value":"more_sniper",
-			"default_value":true
-		},
-		{
 			"type":"slider",
 			"id":"id_MoreEnemies_force_cap_attach",
 			"title":"MoreEnemies_force_cap_attach_title",
@@ -47,6 +38,7 @@
 			"min":0,
 			"step":1
 		},
+{"type":"divider", "size":60},
 		{
 			"type":"slider",
 			"id":"id_MoreEnemies_general_groups_multiplier",
@@ -67,10 +59,23 @@
 			"callback":"MoreEnemies_general_max_of_groups",
 			"value":"general_max_of_groups",
 			"default_value":8,
-			"max":50,
+			"max":100,
 			"min":0,
 			"step":1
 		},
+		{
+			"type":"slider",
+			"id":"id_MoreEnemies_more_spawn",
+			"title":"MoreEnemies_menu_more_spawn_title",
+			"description":"MoreEnemies_menu_more_spawn_desc",
+			"callback":"MoreEnemies_more_spawn",
+			"value":"more_spawn",
+			"default_value":2,
+			"max":100,
+			"min":0,
+			"step":1
+		},
+{"type":"divider", "size":60},
 		{
 			"type":"slider",
 			"id":"id_MoreEnemies_special_max_tank",
@@ -143,17 +148,15 @@
 			"min":0,
 			"step":1
 		},
+{"type":"divider", "size":60},
 		{
-			"type":"slider",
-			"id":"id_MoreEnemies_more_spawn",
-			"title":"MoreEnemies_menu_more_spawn_title",
-			"description":"MoreEnemies_menu_more_spawn_desc",
-			"callback":"MoreEnemies_more_spawn",
-			"value":"more_spawn",
-			"default_value":2,
-			"max":100,
-			"min":0,
-			"step":1
+			"type":"toggle",
+			"id":"id_MoreEnemies_more_sniper",
+			"title":"MoreEnemies_menu_more_sniper_title",
+			"description":"MoreEnemies_menu_more_sniper_desc",
+			"callback":"MoreEnemies_more_sniper",
+			"value":"more_sniper",
+			"default_value":true
 		}
 	]
 }
