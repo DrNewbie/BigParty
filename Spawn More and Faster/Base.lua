@@ -35,7 +35,9 @@ MoreEnemies.Settings = {
 	force_cap = false,
 	more_spawn = 3,
 	force_cap_attach = 120,
-	force_cap_normal = 90
+	force_cap_normal = 90,
+	more_sniper = true,
+	more_sniper_amount = 3
 }
 
 function MoreEnemies:save()
@@ -116,6 +118,12 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 	end
 	function MenuCallbackHandler:MoreEnemies_special_max_sniper(item)
 		MoreEnemies.Settings.special_max_sniper = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_more_sniper_amount(item)
+		MoreEnemies.Settings.more_sniper_amount = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_more_sniper_delay(item)
+		MoreEnemies.Settings.more_sniper_delay = math.round(item:value())
 	end
 	MoreEnemies:load()
 	MenuHelper:LoadFromJsonFile(MoreEnemies.ModPath.."Menu.json", MoreEnemies, MoreEnemies.Settings)

@@ -1,12 +1,12 @@
 {
 	"MoreEnemies_menu_title":"Spawn More Enemies",
 	"MoreEnemies_menu_desc":" ",
-	"MoreEnemies_menu_force_cap_title":"Force Cap",
+	"MoreEnemies_menu_force_cap_title":"Enable Force Cap",
 	"MoreEnemies_menu_force_cap_desc":"A function to kill enemies when there are too many",
 	"MoreEnemies_force_cap_attach_title":"Cap All",
 	"MoreEnemies_force_cap_attach_desc":"How many enemies require to active 'Force Cap'",
-	"MoreEnemies_menu_more_sniper_title":"More Sniper",
-	"MoreEnemies_menu_more_sniper_desc":"Spawn More Sniper",
+	"MoreEnemies_menu_more_sniper_title":"Enable More Sniper",
+	"MoreEnemies_menu_more_sniper_desc":"Enable Spawn More Sniper",
 	"MoreEnemies_menu_more_spawn_title":"Spawn Even More",
 	"MoreEnemies_menu_more_spawn_desc":"IF this isn't enough",
 	"MoreEnemies_force_cap_normal_title":"Cap Normal",
@@ -20,5 +20,9 @@
 	"MoreEnemies_general_groups_multiplier_title":"Groups Multiplier",
 	"MoreEnemies_general_groups_multiplier_desc":"Value to increase the amount in each group",
 	"MoreEnemies_general_max_of_groups_title":"Groups Maximum",
-	"MoreEnemies_general_max_of_groups_desc":"Maximum of Cops in each group"
+	"MoreEnemies_general_max_of_groups_desc":"Maximum of Cops in each group",
+	"MoreEnemies_menu_more_sniper_amount_title":"More Sniper (Amount)",
+	"MoreEnemies_menu_more_sniper_amount_desc":"How many?"
+	"MoreEnemies_menu_more_sniper_delay_title":"More Sniper (Delay)",
+	"MoreEnemies_menu_more_sniper_delay_desc":"How long?"
 }
