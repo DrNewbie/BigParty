@@ -8,7 +8,6 @@ local LogicNotAllow = {
 	inactive = true,
 	intimidated = true,
 	arrest = true,
-	sniper = true,
 	trade = true,
 	phalanx = true
 }
