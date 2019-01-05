@@ -100,7 +100,9 @@ function MoreEnemies:set_group_ai_tweak_data()
 			group_ai.special_unit_spawn_limits.shield = SME_S.special_max_shield or group_ai.special_unit_spawn_limits.shield
 			group_ai.special_unit_spawn_limits.medic = SME_S.special_max_medic or group_ai.special_unit_spawn_limits.medic
 			group_ai.special_unit_spawn_limits.sniper = SME_S.special_max_sniper or group_ai.special_unit_spawn_limits.sniper
-			GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS
+			if GroupAIStateBesiege then
+				GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS
+			end
 		end
 		
 		local half_spooc = 3
