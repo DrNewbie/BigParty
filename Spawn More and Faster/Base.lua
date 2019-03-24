@@ -41,6 +41,24 @@ function MoreEnemies:save()
 	end
 end
 
+function MoreEnemies:reset()
+	self.Settings = {
+		general_groups_multiplier = 4,
+		general_max_of_groups = 8,
+		special_max_tank = 8,
+		special_max_taser = 8,
+		special_max_spooc = 8,
+		special_max_shield = 16,
+		special_max_medic = 16,
+		special_max_sniper = 16,
+		force_cap = false,
+		more_spawn = 3,
+		force_cap_attach = 120,
+		force_cap_normal = 90
+	}
+	self:save()
+end
+
 function MoreEnemies:load()
 	local _file = io.open(self.SavePath, "r")
 	if _file then
@@ -51,21 +69,7 @@ function MoreEnemies:load()
 		end
 		_file:close()
 	else
-		self.Settings = {
-			general_groups_multiplier = 4,
-			general_max_of_groups = 8,
-			special_max_tank = 8,
-			special_max_taser = 8,
-			special_max_spooc = 8,
-			special_max_shield = 16,
-			special_max_medic = 16,
-			special_max_sniper = 16,
-			force_cap = false,
-			more_spawn = 3,
-			force_cap_attach = 120,
-			force_cap_normal = 90
-		}
-		self:save()
+		self:reset()
 	end
 end
 
@@ -77,7 +81,7 @@ function MoreEnemies:set_group_ai_tweak_data()
 		local SME_S = self and self.Settings or nil
 		local group_ai = tweak_data.group_ai
 		local besiege = group_ai.besiege
-		local assault = group_ai.besiege.assault
+		local assault = besiege.assault
 		
 		group_ai.special_unit_spawn_limits = {
 			tank = 8,
@@ -140,8 +144,12 @@ function MoreEnemies:set_group_ai_tweak_data()
 			besiege.reenforce.interval[i] = i
 		end
 		
+		for i = 1, #assault.force_balance_mul do
+			assault.force_balance_mul[i] = general_groups_multiplier + i
+		end
+		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = 24 * i
+			assault.force_pool_balance_mul[i] = general_groups_multiplier + i
 		end
 		
 		for i = 1, #assault.delay do
@@ -159,6 +167,12 @@ function MoreEnemies:set_group_ai_tweak_data()
 		for i = 1, #assault.sustain_duration_balance_mul do
 			assault.sustain_duration_balance_mul[i] = assault.sustain_duration_balance_mul[i] * 3
 		end
+		
+		tweak_data.group_ai = group_ai
+		
+		tweak_data.group_ai.besiege = besiege
+		
+		tweak_data.group_ai.besiege.assault = assault
 	end
 end
 
@@ -167,6 +181,9 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 		MoreEnemies:save()
 		MoreEnemies:set_group_ai_tweak_data()
 	end
+	function MenuCallbackHandler:MoreEnemies_more_reset_config()
+		MoreEnemies:reset()
+	end	
 	function MenuCallbackHandler:MoreEnemies_force_cap(item)
 		MoreEnemies.Settings.force_cap = tostring(item:value()) == 'on' and true or false
 	end
