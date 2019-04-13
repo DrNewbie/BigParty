@@ -32,6 +32,7 @@ function ElementSpawnEnemyDummy:produce(...)
 	if gro:is_enemy_converted_to_criminal(unit) then
 		return unit
 	end
+	local _unit_objective = unit:brain() and unit:brain():objective() or nil
 	local _spawn_enemy = function (unit_name, pos, rot)
 		local unit_done = safe_spawn_unit(unit_name, pos, rot)
 		local team_id = tweak_data.levels:get_default_team_ID(unit_done:base():char_tweak().access == "gangster" and "gangster" or "combatant")
@@ -54,13 +55,12 @@ function ElementSpawnEnemyDummy:produce(...)
 			local sniper_clone = MoreEnemies.Settings.more_sniper_amount or 3
 			local sniper_delay = MoreEnemies.Settings.more_sniper_delay or 10
 			if catname == "sniper" then
-				local _objective_sniper = unit:brain() and unit:brain():objective() or {}
-				if type(_objective_sniper) == "table" then
-					for i = 1, sniper_clone do
-						local unit_done_sniper = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
-						unit_done_sniper:brain():set_objective(_objective_sniper)
-						table.insert(self._units, unit_done_sniper)
+				for i = 1, sniper_clone do
+					local unit_done_sniper = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
+					if _unit_objective then
+						unit_done_sniper:brain():set_objective(_unit_objective)
 					end
+					table.insert(self._units, unit_done_sniper)
 				end
 				local _ids_id = Idstring(self._id):key()
 				if not MoreEnemies.SFM_Sniper_Element[_ids_id] then
@@ -94,6 +94,9 @@ function ElementSpawnEnemyDummy:produce(...)
 			if xtimes > 0 then
 				for i = 1, xtimes do
 					local unit_done = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
+					if _unit_objective then
+						unit_done:brain():set_objective(_unit_objective)
+					end
 					table.insert(self._units, unit_done)
 				end
 			end
