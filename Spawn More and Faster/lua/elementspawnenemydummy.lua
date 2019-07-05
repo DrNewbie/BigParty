@@ -9,42 +9,42 @@ MoreEnemies.SFM_Sniper_Element = MoreEnemies.SFM_Sniper_Element or {}
 
 MoreEnemies.Settings = MoreEnemies.Settings or {}
 
-local SFM_ElementSpawnEnemyDummy_ori_produce = ElementSpawnEnemyDummy.produce
+local _spawn_enemy = function (unit_name, pos, rot)
+	local unit_done = safe_spawn_unit(unit_name, pos, rot)
+	local team_id = tweak_data.levels:get_default_team_ID(unit_done:base():char_tweak().access == "gangster" and "gangster" or "combatant")
+	unit_done:movement():set_team(gro:team_data( team_id ))
+	gro:assign_enemy_to_group_ai(unit_done, team_id)
+	return unit_done
+end
 
-function ElementSpawnEnemyDummy:produce(...)
-	local unit = SFM_ElementSpawnEnemyDummy_ori_produce(self, ...)
+local _pos_offset = function ()
+	local ang = math.random() * 360 * math.pi
+	local rad = math.random(20, 30)
+	return Vector3(math.cos(ang) * rad, math.sin(ang) * rad, 0)
+end
+
+Hooks:PostHook(ElementSpawnEnemyDummy, "produce", "SMF_ElementSpawnEnemyDummy_produce", function(self)
+	local unit = self._units[#self._units]
 	if not unit or not alive(unit) then
 		return
 	end
 	if not managers.groupai or not managers.groupai:state() then
-		return unit
+		return
 	end
 	if unit:name():key() == Idstring('units/pd2_dlc_wwh/characters/ene_locke/ene_locke'):key() then
-		return unit
+		return
 	end
 	local gro = managers.groupai:state()
 	if not gro:is_AI_enabled() or not gro:enemy_weapons_hot() or gro:whisper_mode() then
-		return unit
+		return
 	end
 	if unit:character_damage()._invulnerable or unit:character_damage()._immortal or unit:character_damage()._dead then
-		return unit
+		return
 	end
 	if gro:is_enemy_converted_to_criminal(unit) then
-		return unit
+		return
 	end
 	local _unit_objective = unit:brain() and unit:brain():objective() or nil
-	local _spawn_enemy = function (unit_name, pos, rot)
-		local unit_done = safe_spawn_unit(unit_name, pos, rot)
-		local team_id = tweak_data.levels:get_default_team_ID(unit_done:base():char_tweak().access == "gangster" and "gangster" or "combatant")
-		unit_done:movement():set_team(gro:team_data( team_id ))
-		gro:assign_enemy_to_group_ai(unit_done, team_id)
-		return unit_done
-	end
-	local _pos_offset = function ()
-		local ang = math.random() * 360 * math.pi
-		local rad = math.random(20, 30)
-		return Vector3(math.cos(ang) * rad, math.sin(ang) * rad, 0)
-	end
 	if type(MoreEnemies) == "table" then
 		local _time_now = math.round(TimerManager:game():time())
 		local _enemy_name = unit:name()
@@ -93,14 +93,15 @@ function ElementSpawnEnemyDummy:produce(...)
 			end
 			if xtimes > 0 then
 				for i = 1, xtimes do
-					local unit_done = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
-					if _unit_objective then
-						unit_done:brain():set_objective(_unit_objective)
-					end
-					table.insert(self._units, unit_done)
+					call_on_next_update(function ()
+						local unit_done = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
+						if _unit_objective then
+							unit_done:brain():set_objective(_unit_objective)
+						end
+						table.insert(self._units, unit_done)
+					end)
 				end
 			end
 		end
 	end
-	return unit
-end
+end)
