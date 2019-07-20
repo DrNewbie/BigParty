@@ -9,7 +9,7 @@ MoreEnemies.SFM_Sniper_Element = MoreEnemies.SFM_Sniper_Element or {}
 
 MoreEnemies.Settings = MoreEnemies.Settings or {}
 
-local _spawn_enemy = function (unit_name, pos, rot)
+local _spawn_enemy = function (gro, unit_name, pos, rot)
 	local unit_done = safe_spawn_unit(unit_name, pos, rot)
 	local team_id = tweak_data.levels:get_default_team_ID(unit_done:base():char_tweak().access == "gangster" and "gangster" or "combatant")
 	unit_done:movement():set_team(gro:team_data( team_id ))
@@ -35,7 +35,7 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "produce", "SMF_ElementSpawnEnemyDummy_pr
 		return
 	end
 	local gro = managers.groupai:state()
-	if not gro:is_AI_enabled() or not gro:enemy_weapons_hot() or gro:whisper_mode() then
+	if not gro or not gro:is_AI_enabled() or not gro:enemy_weapons_hot() or gro:whisper_mode() then
 		return
 	end
 	if unit:character_damage()._invulnerable or unit:character_damage()._immortal or unit:character_damage()._dead then
@@ -56,7 +56,7 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "produce", "SMF_ElementSpawnEnemyDummy_pr
 			local sniper_delay = MoreEnemies.Settings.more_sniper_delay or 10
 			if catname == "sniper" then
 				for i = 1, sniper_clone do
-					local unit_done_sniper = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
+					local unit_done_sniper = _spawn_enemy(gro, _enemy_name, pos + _pos_offset(), rot)
 					if _unit_objective then
 						unit_done_sniper:brain():set_objective(_unit_objective)
 					end
@@ -94,7 +94,7 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "produce", "SMF_ElementSpawnEnemyDummy_pr
 			if xtimes > 0 then
 				for i = 1, xtimes do
 					call_on_next_update(function ()
-						local unit_done = _spawn_enemy(_enemy_name, pos + _pos_offset(), rot)
+						local unit_done = _spawn_enemy(gro, _enemy_name, pos + _pos_offset(), rot)
 						if _unit_objective then
 							unit_done:brain():set_objective(_unit_objective)
 						end
