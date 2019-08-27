@@ -31,17 +31,20 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "produce", "SMF_ElementSpawnEnemyDummy_pr
 	if not managers.groupai or not managers.groupai:state() then
 		return
 	end
-	if unit:name():key() == Idstring('units/pd2_dlc_wwh/characters/ene_locke/ene_locke'):key() then
-		return
-	end
 	local gro = managers.groupai:state()
 	if not gro or not gro:is_AI_enabled() or not gro:enemy_weapons_hot() or gro:whisper_mode() then
 		return
 	end
-	if unit:character_damage()._invulnerable or unit:character_damage()._immortal or unit:character_damage()._dead then
+	if not unit:character_damage():can_kill() or unit:character_damage():dead() then
 		return
 	end
 	if gro:is_enemy_converted_to_criminal(unit) then
+		return
+	end
+	if not managers.enemy:is_enemy(unit) then
+		return
+	end
+	if managers.enemy:is_civilian(unit) then
 		return
 	end
 	local _unit_objective = unit:brain() and unit:brain():objective() or nil
@@ -95,6 +98,22 @@ Hooks:PostHook(ElementSpawnEnemyDummy, "produce", "SMF_ElementSpawnEnemyDummy_pr
 				for i = 1, xtimes do
 					call_on_next_update(function ()
 						local unit_done = _spawn_enemy(gro, _enemy_name, pos + _pos_offset(), rot)
+						if _unit_objective then
+						
+						else
+							local playerss = gro:all_player_criminals()
+							if playerss then
+								local cc = playerss[table.random_key(playerss)]
+								if Utils:IsInHeist() and cc and cc.unit and alive(cc.unit) then
+									_unit_objective = {
+										type = "follow",
+										follow_unit = cc.unit,
+										scan = true,
+										is_default = true
+									}
+								end
+							end
+						end
 						if _unit_objective then
 							unit_done:brain():set_objective(_unit_objective)
 						end

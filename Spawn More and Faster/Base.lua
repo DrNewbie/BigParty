@@ -16,22 +16,24 @@ Hooks:Add("LocalizationManagerPostInit", "MoreEnemies_loc", function(loc)
 	loc:load_localization_file(MoreEnemies.ModPath.."Loc.json")
 end)
 
-MoreEnemies.Settings = {
-	general_groups_multiplier = 4,
-	general_max_of_groups = 8,
-	special_max_tank = 8,
-	special_max_taser = 8,
-	special_max_spooc = 8,
-	special_max_shield = 16,
-	special_max_medic = 16,
-	special_max_sniper = 16,
-	force_cap = false,
-	more_spawn = 3,
-	force_cap_attach = 120,
-	force_cap_normal = 90,
-	more_sniper = true,
-	more_sniper_amount = 3
-}
+function MoreEnemies:Default()
+	return {
+		general_groups_multiplier = 4,
+		general_max_of_groups = 8,
+		special_max_tank = 4,
+		special_max_taser = 4,
+		special_max_spooc = 4,
+		special_max_shield = 8,
+		special_max_medic = 8,
+		special_max_sniper = 8,
+		force_cap = true,
+		more_spawn = 2,
+		force_cap_attach = 120,
+		force_cap_normal = 90,
+		more_sniper = true,
+		more_sniper_amount = 3
+	}
+end
 
 function MoreEnemies:save()
 	local _file = io.open(self.SavePath, "w+")
@@ -42,28 +44,16 @@ function MoreEnemies:save()
 end
 
 function MoreEnemies:reset()
-	self.Settings = {
-		general_groups_multiplier = 4,
-		general_max_of_groups = 8,
-		special_max_tank = 8,
-		special_max_taser = 8,
-		special_max_spooc = 8,
-		special_max_shield = 16,
-		special_max_medic = 16,
-		special_max_sniper = 16,
-		force_cap = false,
-		more_spawn = 3,
-		force_cap_attach = 120,
-		force_cap_normal = 90
-	}
+	self.Settings = self:Default()
 	self:save()
 end
 
 function MoreEnemies:load()
+	self.Settings = self:Default()
 	local _file = io.open(self.SavePath, "r")
 	if _file then
 		for k, v in pairs(json.decode(_file:read("*all")) or {}) do
-			if k then
+			if k and self:Default()[k] and type(self:Default()[k]) == type(v) then
 				self.Settings[k] = v
 			end
 		end
@@ -95,18 +85,16 @@ function MoreEnemies:set_group_ai_tweak_data()
 		local general_groups_multiplier = 4
 		local general_max_of_groups = 8
 		
-		if SME_S then
-			general_groups_multiplier = SME_S.general_groups_multiplier or general_groups_multiplier
-			general_max_of_groups = SME_S.general_max_of_groups or general_max_of_groups
-			group_ai.special_unit_spawn_limits.tank = SME_S.special_max_tank or group_ai.special_unit_spawn_limits.tank
-			group_ai.special_unit_spawn_limits.taser = SME_S.special_max_taser or group_ai.special_unit_spawn_limits.taser
-			group_ai.special_unit_spawn_limits.spooc = SME_S.special_max_spooc or group_ai.special_unit_spawn_limits.spooc
-			group_ai.special_unit_spawn_limits.shield = SME_S.special_max_shield or group_ai.special_unit_spawn_limits.shield
-			group_ai.special_unit_spawn_limits.medic = SME_S.special_max_medic or group_ai.special_unit_spawn_limits.medic
-			group_ai.special_unit_spawn_limits.sniper = SME_S.special_max_sniper or group_ai.special_unit_spawn_limits.sniper
-			if GroupAIStateBesiege then
-				GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS
-			end
+		general_groups_multiplier = SME_S.general_groups_multiplier or general_groups_multiplier
+		general_max_of_groups = SME_S.general_max_of_groups or general_max_of_groups
+		group_ai.special_unit_spawn_limits.tank = SME_S.special_max_tank or group_ai.special_unit_spawn_limits.tank
+		group_ai.special_unit_spawn_limits.taser = SME_S.special_max_taser or group_ai.special_unit_spawn_limits.taser
+		group_ai.special_unit_spawn_limits.spooc = SME_S.special_max_spooc or group_ai.special_unit_spawn_limits.spooc
+		group_ai.special_unit_spawn_limits.shield = SME_S.special_max_shield or group_ai.special_unit_spawn_limits.shield
+		group_ai.special_unit_spawn_limits.medic = SME_S.special_max_medic or group_ai.special_unit_spawn_limits.medic
+		group_ai.special_unit_spawn_limits.sniper = SME_S.special_max_sniper or group_ai.special_unit_spawn_limits.sniper
+		if GroupAIStateBesiege then
+			GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS
 		end
 		
 		local half_spooc = 3
