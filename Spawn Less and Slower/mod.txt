@@ -1,0 +1,24 @@
+{
+  "description": "Spawn Less and Slower",
+  "name": "Spawn Less and Slower",
+  "author": "Dr_Newbie",
+  "contact": "https://modworkshop.net/",
+  "version": "1",
+  "priority": 1,
+  "color": "0 0 0",
+  "blt_version": 2,
+  "hooks": [
+    {
+      "script_path": "Base.lua",
+      "hook_id": "lib/setups/gamesetup"
+    }
+  ],
+  "updates": [
+    {
+      "identifier": "SpawnLessEnemiesGitHubUpdate",
+      "host": {
+        "meta": "https://drnewbie.github.io/BigParty/SpawnLessEnemies.meta.json"
+      }
+    }
+  ]
+}
