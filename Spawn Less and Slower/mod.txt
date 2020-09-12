@@ -17,7 +17,9 @@
     {
       "identifier": "SpawnLessEnemiesGitHubUpdate",
       "host": {
-        "meta": "https://drnewbie.github.io/BigParty/SpawnLessEnemies.meta.json"
+        "meta": "https://drnewbie.github.io/BigParty/SpawnLessEnemies.meta.json",
+        "patchnotes": "https://github.com/DrNewbie/BigParty/commits/master",
+        "download": "https://drnewbie.github.io/BigParty/SpawnLessEnemies.zip"
       }
     }
   ]
