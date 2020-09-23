@@ -1,4 +1,4 @@
-local _r = 0.66
+local _r = 0.49
 local _mul = 0.88
 local _cd_mul = 6.66
 local _clamp = {1, 12}
@@ -44,7 +44,11 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = assault.force[i] * _mul
+			assault.force[i] = 15
+		end
+		
+		for i = 1, #assault.force_pool do
+			assault.force[i] = 150
 		end
 		
 		for i = 1, #besiege.reenforce.interval do
@@ -52,11 +56,11 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force_balance_mul do
-			assault.force_balance_mul[i] = assault.force_balance_mul[i] * _mul
+			assault.force_balance_mul[i] = 1
 		end
 		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = assault.force_pool_balance_mul[i] * _mul
+			assault.force_pool_balance_mul[i] = 1
 		end
 		
 		for i = 1, #assault.delay do
@@ -75,6 +79,14 @@ function set_group_ai_tweak_data()
 			assault.sustain_duration_balance_mul[i] = assault.sustain_duration_balance_mul[i] * _mul
 		end
 		
+		if assault.build_duration then 
+			assault.build_duration = assault.build_duration * _mul
+		end
+		
+		if assault.fade_duration then 
+			assault.fade_duration = assault.fade_duration * _mul
+		end
+		
 		tweak_data.group_ai = group_ai
 		
 		tweak_data.group_ai.besiege = besiege
@@ -90,21 +102,21 @@ if GameSetup then
 end
 
 if GroupAIStateBase then
-	GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = 3 * _r
+	GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = 8
 	function GroupAIStateBase:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
 end
 
 if GroupAIStateBesiege then
-	GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 3 * _r
+	GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 8
 	function GroupAIStateBesiege:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
 end
 
 if GroupAIStateStreet then
-	GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = 3 * _r
+	GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = 8
 	function GroupAIStateStreet:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
