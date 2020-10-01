@@ -56,11 +56,11 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force_balance_mul do
-			assault.force_balance_mul[i] = 1
+			assault.force_balance_mul[i] = 1 + i * 0.15
 		end
 		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = 1
+			assault.force_pool_balance_mul[i] = 1 + i * 0.85
 		end
 		
 		for i = 1, #assault.delay do
@@ -76,7 +76,7 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.sustain_duration_balance_mul do
-			assault.sustain_duration_balance_mul[i] = assault.sustain_duration_balance_mul[i] * _mul
+			assault.sustain_duration_balance_mul[i] = 1 + i * 0.15
 		end
 		
 		if assault.build_duration then 
@@ -92,6 +92,10 @@ function set_group_ai_tweak_data()
 		tweak_data.group_ai.besiege = besiege
 		
 		tweak_data.group_ai.besiege.assault = assault
+		
+		tweak_data.group_ai.street = tweak_data.group_ai.besiege
+		
+		tweak_data.group_ai.safehouse = tweak_data.group_ai.besiege
 	end
 end
 
