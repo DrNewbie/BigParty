@@ -28,8 +28,8 @@ function MoreEnemies:Default()
 		special_max_sniper = 8,
 		force_cap = true,
 		more_spawn = 2,
-		force_cap_attach = 100,
-		force_cap_normal = 80,
+		force_cap_attach = 90,
+		force_cap_normal = 70,
 		more_sniper = true,
 		more_sniper_amount = 3,
 		assault_force = 28
