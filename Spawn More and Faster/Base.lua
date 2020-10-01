@@ -19,7 +19,7 @@ end)
 function MoreEnemies:Default()
 	return {
 		general_groups_multiplier = 4,
-		general_max_of_groups = 8,
+		general_max_of_groups = 12,
 		special_max_tank = 4,
 		special_max_taser = 4,
 		special_max_spooc = 4,
@@ -28,10 +28,11 @@ function MoreEnemies:Default()
 		special_max_sniper = 8,
 		force_cap = true,
 		more_spawn = 2,
-		force_cap_attach = 120,
-		force_cap_normal = 90,
+		force_cap_attach = 100,
+		force_cap_normal = 80,
 		more_sniper = true,
-		more_sniper_amount = 3
+		more_sniper_amount = 3,
+		assault_force = 28
 	}
 end
 
@@ -125,7 +126,7 @@ function MoreEnemies:set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 14
+			assault.force[i] = SME_S.assault_force or 14
 		end
 		
 		for i = 1, #besiege.reenforce.interval do
@@ -133,11 +134,11 @@ function MoreEnemies:set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force_balance_mul do
-			assault.force_balance_mul[i] = 1
+			assault.force_balance_mul[i] = 1.25
 		end
 		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = 1
+			assault.force_pool_balance_mul[i] = 1.25
 		end
 		
 		for i = 1, #assault.delay do
@@ -220,6 +221,9 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 	end
 	function MenuCallbackHandler:MoreEnemies_more_sniper_delay(item)
 		MoreEnemies.Settings.more_sniper_delay = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_assault_force(item)
+		MoreEnemies.Settings.assault_force = math.round(item:value())
 	end
 	MoreEnemies:load()
 	MenuHelper:LoadFromJsonFile(MoreEnemies.ModPath.."Menu.json", MoreEnemies, MoreEnemies.Settings)

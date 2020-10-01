@@ -6,6 +6,18 @@
   "back_callback": "MoreEnemies_toggle_save",
   "items": [
     {
+      "type": "slider",
+      "id": "id_MoreEnemies_assault_force",
+      "title": "MoreEnemies_assault_force_title",
+      "description": "MoreEnemies_assault_force_desc",
+      "callback": "MoreEnemies_assault_force",
+      "value": "assault_force",
+      "default_value": 28,
+      "max": 999,
+      "min": 1,
+      "step": 1
+    },
+    {
       "type": "toggle",
       "id": "id_MoreEnemies_force_cap",
       "title": "MoreEnemies_menu_force_cap_title",
@@ -61,7 +73,7 @@
       "description": "MoreEnemies_general_max_of_groups_desc",
       "callback": "MoreEnemies_general_max_of_groups",
       "value": "general_max_of_groups",
-      "default_value": 8,
+      "default_value": 12,
       "max": 100,
       "min": 0,
       "step": 1
