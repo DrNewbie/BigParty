@@ -125,7 +125,7 @@ function MoreEnemies:set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 1200 * i
+			assault.force[i] = 14
 		end
 		
 		for i = 1, #besiege.reenforce.interval do
@@ -133,11 +133,11 @@ function MoreEnemies:set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force_balance_mul do
-			assault.force_balance_mul[i] = general_groups_multiplier + i
+			assault.force_balance_mul[i] = 1
 		end
 		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = general_groups_multiplier + i
+			assault.force_pool_balance_mul[i] = 1
 		end
 		
 		for i = 1, #assault.delay do
@@ -161,6 +161,10 @@ function MoreEnemies:set_group_ai_tweak_data()
 		tweak_data.group_ai.besiege = besiege
 		
 		tweak_data.group_ai.besiege.assault = assault
+		
+		tweak_data.group_ai.street = tweak_data.group_ai.besiege
+		
+		tweak_data.group_ai.safehouse = tweak_data.group_ai.besiege
 	end
 end
 
