@@ -44,7 +44,7 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 15
+			assault.force[i] = 7
 		end
 		
 		for i = 1, #assault.force_pool do
