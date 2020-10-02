@@ -44,7 +44,7 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 7
+			assault.force[i] = 7 + i
 		end
 		
 		for i = 1, #assault.force_pool do
@@ -56,11 +56,11 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force_balance_mul do
-			assault.force_balance_mul[i] = 1 + i * 0.15
+			assault.force_balance_mul[i] = 0.5 + i * 0.15
 		end
 		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = 1 + i * 0.85
+			assault.force_pool_balance_mul[i] = 0.5 + i * 0.85
 		end
 		
 		for i = 1, #assault.delay do
