@@ -3,7 +3,7 @@
   "name": "Spawn More and Faster",
   "author": "Dr_Newbie",
   "contact": "http://modwork.shop/20649",
-  "version": "76",
+  "version": "77",
   "priority": 1,
   "color": "0 0 0",
   "blt_version": 2,
@@ -17,12 +17,16 @@
       "hook_id": "lib/setups/gamesetup"
     },
     {
-      "script_path": "lua/groupaistatebesiege.lua",
+      "script_path": "lua/groupaistatebase.lua",
+      "hook_id": "lib/managers/group_ai_states/groupaistatebase"
+    },
+    {
+      "script_path": "lua/groupaistatebase.lua",
       "hook_id": "lib/managers/group_ai_states/groupaistatebesiege"
     },
     {
       "script_path": "lua/groupaistatebase.lua",
-      "hook_id": "lib/managers/group_ai_states/groupaistatebase"
+      "hook_id": "lib/managers/group_ai_states/groupaistatestreet"
     },
     {
       "script_path": "lua/elementspawnenemydummy.lua",

@@ -1,1 +1,0 @@
-GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 42

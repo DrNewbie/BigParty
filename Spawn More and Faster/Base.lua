@@ -94,11 +94,20 @@ function MoreEnemies:set_group_ai_tweak_data()
 		group_ai.special_unit_spawn_limits.shield = SME_S.special_max_shield or group_ai.special_unit_spawn_limits.shield
 		group_ai.special_unit_spawn_limits.medic = SME_S.special_max_medic or group_ai.special_unit_spawn_limits.medic
 		group_ai.special_unit_spawn_limits.sniper = SME_S.special_max_sniper or group_ai.special_unit_spawn_limits.sniper
+		
+		if GroupAIStateBase then
+			GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS
+		end
+
 		if GroupAIStateBesiege then
 			GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS
 		end
+
+		if GroupAIStateStreet then
+			GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = general_max_of_groups or GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS
+		end
 		
-		local half_spooc = 3
+		local less_spooc = math.max(group_ai.special_unit_spawn_limits.spooc - 1, 1)
 		
 		for id, group in pairs(group_ai.enemy_spawn_groups) do
 			if id ~= "Phalanx" then
@@ -108,7 +117,7 @@ function MoreEnemies:set_group_ai_tweak_data()
 						group.amount[k] = math.round(v * general_groups_multiplier) + 1
 						group.amount[k] = math.clamp(group.amount[k], 1, general_max_of_groups)
 						if is_spooc then
-							group.amount[k] = math.clamp(group.amount[k], 1, half_spooc)
+							group.amount[k] = math.clamp(group.amount[k], 1, less_spooc)
 						end
 					end
 				end
@@ -118,7 +127,7 @@ function MoreEnemies:set_group_ai_tweak_data()
 						spawn.amount_max = math.round(spawn.amount_max) + 1
 						spawn.amount_max = math.clamp(spawn.amount_max, 1, general_max_of_groups)
 						if is_spooc then
-							spawn.amount_max = math.clamp(spawn.amount_max, 1, half_spooc)
+							spawn.amount_max = math.clamp(spawn.amount_max, 1, less_spooc)
 						end
 					end
 				end
