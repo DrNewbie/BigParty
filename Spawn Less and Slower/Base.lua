@@ -11,26 +11,25 @@ function set_group_ai_tweak_data()
 		local besiege = group_ai.besiege
 		local assault = besiege.assault
 
-		group_ai.special_unit_spawn_limits.tank = math.round(math.clamp(group_ai.special_unit_spawn_limits.tank*_r, 1, 2))
-		group_ai.special_unit_spawn_limits.taser = math.round(math.clamp(group_ai.special_unit_spawn_limits.taser*_r, 1, 3))
-		group_ai.special_unit_spawn_limits.spooc = math.round(math.clamp(group_ai.special_unit_spawn_limits.spooc*_r, 1, 2))
-		group_ai.special_unit_spawn_limits.shield = math.round(math.clamp(group_ai.special_unit_spawn_limits.shield*_r, 1, 6))
-		group_ai.special_unit_spawn_limits.medic = math.round(math.clamp(group_ai.special_unit_spawn_limits.medic*_r, 1, 2))
+		group_ai.special_unit_spawn_limits.tank = 2
+		group_ai.special_unit_spawn_limits.taser = 3
+		group_ai.special_unit_spawn_limits.spooc = 2
+		group_ai.special_unit_spawn_limits.shield = 4
+		group_ai.special_unit_spawn_limits.medic = 2
 
 		for id, group in pairs(group_ai.enemy_spawn_groups) do
-			for _, spawn in pairs(group.spawn or {}) do
-				if not group_ai.unit_categories[spawn.unit].special_type then
-					if spawn.amount_max then
-						spawn.amount_max = spawn.amount_max * (_r * ((spawn.unit:find("swat") or spawn.unit:find("heavy")) and 1 or _r))
-						spawn.amount_max = math.round(spawn.amount_max) + 1
-						spawn.amount_max = math.clamp(spawn.amount_max, _clamp[1], _clamp[2])
-					end
+			for id2, spawn in pairs(group.spawn or {}) do
+				if spawn.amount_max and spawn.amount_min then
+					spawn.amount_max = spawn.amount_max * (_r * ((spawn.unit:find("swat") or spawn.unit:find("heavy")) and 1 or _r))
+					spawn.amount_max = math.round(spawn.amount_max) + 1
+					group_ai.enemy_spawn_groups[id].spawn[id2].amount_max = math.clamp(spawn.amount_max, _clamp[1], _clamp[2])
+					group_ai.enemy_spawn_groups[id].spawn[id2].amount_min = math.min(spawn.amount_min, spawn.amount_max)
 				end
 			end
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 8
+			assault.force[i] = 6
 		end
 		
 		for i = 1, #assault.force_pool do
@@ -62,7 +61,7 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.sustain_duration_balance_mul do
-			assault.sustain_duration_balance_mul[i] = 1 + i * 0.15
+			assault.sustain_duration_balance_mul[i] = 1
 		end
 		
 		if assault.build_duration then 
@@ -92,21 +91,21 @@ if GameSetup then
 end
 
 if GroupAIStateBase then
-	GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = 12
+	GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = 6
 	function GroupAIStateBase:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
 end
 
 if GroupAIStateBesiege then
-	GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 12
+	GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 6
 	function GroupAIStateBesiege:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
 end
 
 if GroupAIStateStreet then
-	GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = 12
+	GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = 6
 	function GroupAIStateStreet:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
