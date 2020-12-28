@@ -51,6 +51,15 @@
       "step": 1
     },
     {
+      "type": "toggle",
+      "id": "id_MoreEnemies_focred_dead",
+      "title": "MoreEnemies_menu_focred_dead_title",
+      "description": "MoreEnemies_menu_focred_dead_desc",
+      "callback": "MoreEnemies_focred_dead",
+      "value": "focred_dead",
+      "default_value": false
+    },
+    {
       "type": "divider",
       "size": 30
     },

@@ -28,5 +28,7 @@
   "MoreEnemies_menu_more_sniper_delay_title": "More Sniper (Delay)",
   "MoreEnemies_menu_more_sniper_delay_desc": "How long?",
   "MoreEnemies_menu_reset_config_title": "Back to Default",
-  "MoreEnemies_menu_reset_config_desc": " "
+  "MoreEnemies_menu_reset_config_desc": " ",
+  "MoreEnemies_menu_focred_dead_title": "Enable Force Kill",
+  "MoreEnemies_menu_focred_dead_desc": "A function to kill cops after a minute."
 }

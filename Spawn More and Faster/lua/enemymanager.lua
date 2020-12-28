@@ -22,13 +22,27 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 	if not gro:is_AI_enabled() or not gro:enemy_weapons_hot() or gro:whisper_mode() then
 		return
 	end
-	if MoreEnemies.Settings.force_cap then
-		local _can_kill = function(target_unit)
-			if not target_unit or not alive(target_unit) or not target_unit:character_damage() or target_unit:character_damage().immortal or target_unit:character_damage()._invulnerable or target_unit:character_damage():dead() or managers.groupai:state():is_enemy_converted_to_criminal(target_unit) or not target_unit:base()._tweak_table then
-				return false
-			end
-			return true
+	local _can_kill = function(target_unit)
+		if not target_unit or not alive(target_unit) or not target_unit:character_damage() or target_unit:character_damage().immortal or target_unit:character_damage()._invulnerable or target_unit:character_damage():dead() or managers.groupai:state():is_enemy_converted_to_criminal(target_unit) or not target_unit:base()._tweak_table then
+			return false
 		end
+		return true
+	end
+	if MoreEnemies.Settings.focred_dead then
+		for u_key, u_data in pairs(self._enemy_data.unit_data) do
+			if not u_data or not _can_kill(u_data.unit) or self:is_civilian(u_data.unit) then
+			
+			else
+				if not self._enemy_data.unit_data[u_key].__sme_focred_dead then
+					self._enemy_data.unit_data[u_key].__sme_focred_dead = t + 30 + math.random() * 30
+				elseif t >= self._enemy_data.unit_data[u_key].__sme_focred_dead and self._enemy_data.unit_data[u_key].__sme_focred_dead > 0 then
+					self._enemy_data.unit_data[u_key].__sme_focred_dead = -1
+					u_data.unit:character_damage():damage_mission({damage = 9999999})
+				end
+			end
+		end
+	end
+	if MoreEnemies.Settings.force_cap then
 		if self._sfm_delay then
 			self._sfm_delay = self._sfm_delay - dt
 			if self._sfm_delay <= 0 then
@@ -70,12 +84,12 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 							if type(sp_limit[cat_name]) == "number" and sp_limit[cat_name] > 0 then
 								if cat_count[cat_name] > sp_limit[cat_name] then
 									cat_count[cat_name] = cat_count[cat_name] - 1
-									unit:character_damage():damage_mission({damage = 9999999, forced = true})
+									unit:character_damage():damage_mission({damage = 9999999})
 								end
 							else
 								if cat_count["Normal"] > MoreEnemies.Settings.force_cap_normal then
 									cat_count["Normal"] = cat_count["Normal"] - 1
-									unit:character_damage():damage_mission({damage = 9999999, forced = true})
+									unit:character_damage():damage_mission({damage = 9999999})
 								end
 							end
 						end
@@ -93,7 +107,7 @@ Hooks:PostHook(EnemyManager, "update", "SMF_EnemyManager_update", function(self,
 							
 							else
 								kill_times = kill_times - 1
-								u_data.unit:character_damage():damage_mission({damage = 9999999, forced = true})
+								u_data.unit:character_damage():damage_mission({damage = 9999999})
 								break
 							end						
 						end

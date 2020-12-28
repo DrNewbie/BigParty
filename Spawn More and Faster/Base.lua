@@ -32,7 +32,8 @@ function MoreEnemies:Default()
 		force_cap_normal = 70,
 		more_sniper = true,
 		more_sniper_amount = 3,
-		assault_force = 28
+		assault_force = 28,
+		focred_dead = false
 	}
 end
 
@@ -233,6 +234,9 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 	end
 	function MenuCallbackHandler:MoreEnemies_assault_force(item)
 		MoreEnemies.Settings.assault_force = math.round(item:value())
+	end
+	function MenuCallbackHandler:MoreEnemies_focred_dead(item)
+		MoreEnemies.Settings.focred_dead = tostring(item:value()) == 'on' and true or false
 	end
 	MoreEnemies:load()
 	MenuHelper:LoadFromJsonFile(MoreEnemies.ModPath.."Menu.json", MoreEnemies, MoreEnemies.Settings)
