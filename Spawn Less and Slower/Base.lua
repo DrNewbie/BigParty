@@ -29,11 +29,11 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 6
+			assault.force[i] = 4
 		end
 		
 		for i = 1, #assault.force_pool do
-			assault.force[i] = 150
+			assault.force[i] = 66
 		end
 		
 		for i = 1, #besiege.reenforce.interval do
