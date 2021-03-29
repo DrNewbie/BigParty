@@ -1,8 +1,8 @@
 function set_group_ai_tweak_data()
-	local _r = 0.49
+	local _r = 0.33
 	local _mul = 0.88
 	local _cd_mul = 6.66
-	local _clamp = {2, 12}
+	local _clamp = {1, 12}
 	if MutatorBigParty and managers.mutators:is_mutator_active(MutatorBigParty) then
 		return
 	end
@@ -22,6 +22,8 @@ function set_group_ai_tweak_data()
 				if spawn.amount_max and spawn.amount_min then
 					spawn.amount_max = spawn.amount_max * (_r * ((spawn.unit:find("swat") or spawn.unit:find("heavy")) and 1 or _r))
 					spawn.amount_max = math.round(spawn.amount_max) + 1
+					group_ai.enemy_spawn_groups[id].amount[1] = 1
+					group_ai.enemy_spawn_groups[id].amount[2] = 1
 					group_ai.enemy_spawn_groups[id].spawn[id2].amount_max = math.clamp(spawn.amount_max, _clamp[1], _clamp[2])
 					group_ai.enemy_spawn_groups[id].spawn[id2].amount_min = math.min(spawn.amount_min, spawn.amount_max)
 				end
@@ -29,7 +31,7 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force do
-			assault.force[i] = 4
+			assault.force[i] = 3
 		end
 		
 		for i = 1, #assault.force_pool do
@@ -41,11 +43,11 @@ function set_group_ai_tweak_data()
 		end
 		
 		for i = 1, #assault.force_balance_mul do
-			assault.force_balance_mul[i] = 1
+			assault.force_balance_mul[i] = 0.66
 		end
 		
 		for i = 1, #assault.force_pool_balance_mul do
-			assault.force_pool_balance_mul[i] = 1
+			assault.force_pool_balance_mul[i] = 0.66
 		end
 		
 		for i = 1, #assault.delay do
@@ -91,21 +93,21 @@ if GameSetup then
 end
 
 if GroupAIStateBase then
-	GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = 6
+	GroupAIStateBase._MAX_SIMULTANEOUS_SPAWNS = 1
 	function GroupAIStateBase:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
 end
 
 if GroupAIStateBesiege then
-	GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 6
+	GroupAIStateBesiege._MAX_SIMULTANEOUS_SPAWNS = 1
 	function GroupAIStateBesiege:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
 end
 
 if GroupAIStateStreet then
-	GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = 6
+	GroupAIStateStreet._MAX_SIMULTANEOUS_SPAWNS = 1
 	function GroupAIStateStreet:_get_balancing_multiplier(balance_multipliers)
 		return balance_multipliers[#balance_multipliers]
 	end
