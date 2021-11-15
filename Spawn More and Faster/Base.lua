@@ -32,6 +32,7 @@ function MoreEnemies:Default()
 		force_cap_normal = 70,
 		more_sniper = true,
 		more_sniper_amount = 3,
+		more_sniper_delay = 30,
 		assault_force = 28,
 		focred_dead = false
 	}
@@ -184,8 +185,14 @@ Hooks:Add("MenuManagerInitialize", "MenManInitMoreEnemies", function()
 		MoreEnemies:save()
 		MoreEnemies:set_group_ai_tweak_data()
 	end
-	function MenuCallbackHandler:MoreEnemies_more_reset_config()
+	function MenuCallbackHandler:MoreEnemies_more_reset_config(item)
 		MoreEnemies:reset()
+		if item then
+			local items_to_reset = MoreEnemies:Default()
+			for __key, __var in pairs(items_to_reset) do
+				MenuHelper:ResetItemsToDefaultValue(item, "id_MoreEnemies_"..__key, __var)
+			end
+		end
 	end	
 	function MenuCallbackHandler:MoreEnemies_force_cap(item)
 		MoreEnemies.Settings.force_cap = tostring(item:value()) == 'on' and true or false
